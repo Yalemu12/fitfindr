@@ -1,0 +1,24 @@
+======================================================================
+FITFINDR — DELIBERATE FAILURE-MODE VERIFICATION
+======================================================================
+
+[1] search_listings -> impossible query (expect [], no exception)
+    search_listings('designer ballgown', size='XXS', max_price=5)
+    RESULT: []   type: list
+    PASS: empty list, no exception
+
+[1b] full agent with same impossible query (expect informative error)
+    AGENT ERROR: I couldn't find any listings matching 'designer ballgown', size XXS, under $5. Try raising your budget above $5, dropping the size filter, or broadening the style (e.g. 'graphic tee' instead of 'vintage 2003 tour tee'). I didn't generate an outfit or fit card because there was nothing to style.
+    PASS: specific, actionable message (names filters + what to try)
+
+[2] suggest_outfit -> EMPTY wardrobe (expect general styling advice string)
+    RESULT: This adorable Y2K Baby Tee is a great find. It pairs well with bottoms like distressed denim, flowy skirts, or shorts in neutral shades like beige, blue, or black, which will let the playful butterfly print take center stage. The cottagecore vibe of this tee makes it perfect for casual, everyday outings or a relaxed brunch with friends. For a flattering fit, try pairing it with high-waisted bottoms to balance out the cropped length of the tee. Overall, this tee is a versatile addition to any wardrobe, and its soft colors will complement a variety of warm-weather styles.
+    PASS: non-empty general styling advice, no exception
+
+[3] create_fit_card -> empty outfit string (expect descriptive msg, no exception)
+    RESULT: "No outfit suggestion was provided, so there's nothing to caption yet."
+    PASS: descriptive error string, no exception
+
+======================================================================
+ALL THREE FAILURE MODES TRIGGERED AND RECOVERED GRACEFULLY
+======================================================================
